@@ -6,88 +6,70 @@ import TodoList from "./components/TodoList";
 //import the bootstrap and uuid module
 import "bootstrap/dist/css/bootstrap.min.css";
 import uuid from "uuid";
+const [items, setItems] = React.useState([]);
+const [item, setItem] = React.useState("");
+const [id, setId] = React.useState(uuid());
+const [editedItem, seteditedItem] = React.useState(false);
 
-class App extends React.Component {
-  state = {
-    items: [],
-    id: uuid(),
-    item: "",
-    editItem: false
+const App = () => {
+  const handleChange = e => {
+    setItem(e.target.value);
   };
 
-  handleChange = e => {
-    this.setState({
-      item: e.target.value
-    });
-  };
-
-  handleSubmit = e => {
+  const handleSubmit = e => {
     e.preventDefault();
 
     const newItem = {
-      id: this.state.id,
-      item: this.state.item
+      id: id,
+      item: item
     };
 
-    const updatedItems = [...this.state.items, newItem];
-
-    this.setState({
-      items: updatedItems,
-      item: "",
-      id: uuid(),
-      editItem: false
-    });
+    const updatedItems = [...items, newItem];
+    setItems(updatedItems);
+    setItem("");
+    setId(uuid());
+    seteditedItem(false);
   };
 
-  clearList = () => {
-    this.setState({
-      items: []
-    });
+  const clearList = () => {
+    setItems([]);
   };
 
-  handleDelete = id => {
-    const filteredList = this.state.items.filter(item => item.id !== id);
-    this.setState({
-      items: filteredList
-    });
+  const handleDelete = id => {
+    const filteredList = items.filter(item => item.id !== id);
+    updatedItems(filteredList);
   };
 
-  handleEdit = id => {
-    const filteredList = this.state.items.filter(item => item.id !== id);
+  const handleEdit = id => {
+    const filteredList = items.filter(item => item.id !== id);
 
-    const selectedItem = this.state.items.find(item => item.id === id);
-
-    this.setState({
-      items: filteredList,
-      item: selectedItem.item,
-      id: id,
-      editItem: true
-    });
+    const selectedItem = items.find(item => item.id === id);
+    setItems(filteredList);
+    setItem(selectedItem.item);
+    setId(id);
+    seteditedItem(true);
   };
-
-  render() {
-    return (
-      <div className="container">
-        <div className="row">
-          <div className="col-10 mx-auto col-md-8 mt-4">
-            <h3 className="text-capitalize text-center">Simple Todo</h3>
-            <TodoInput
-              item={this.state.item}
-              handleChange={this.handleChange}
-              handleSubmit={this.handleSubmit}
-              editItem={this.state.editItem}
-            />
-            <TodoList
-              items={this.state.items}
-              clearList={this.clearList}
-              handleDelete={this.handleDelete}
-              handleEdit={this.handleEdit}
-            />
-          </div>
+  return (
+    <div className="container">
+      <div className="row">
+        <div className="col-10 mx-auto col-md-8 mt-4">
+          <h3 className="text-capitalize text-center">Simple Todo</h3>
+          <TodoInput
+            item={item}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+            editItem={editItem}
+          />
+          <TodoList
+            items={items}
+            clearList={clearList}
+            handleDelete={handleDelete}
+            handleEdit={handleEdit}
+          />
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default App;

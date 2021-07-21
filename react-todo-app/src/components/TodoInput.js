@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
-export default class TodoInput extends Component {
-  render() {
-    const { item, handleChange, handleSubmit, editItem } = this.props;
+const TodoInput=(props)=>{
+  
+    const { item, handleChange, handleSubmit, editItem } = props;
     return (
       <div>
         <div className="card card-body my-3">
@@ -35,5 +35,7 @@ export default class TodoInput extends Component {
         </div>
       </div>
     );
-  }
+  
 }
+
+export default  TodoInput;

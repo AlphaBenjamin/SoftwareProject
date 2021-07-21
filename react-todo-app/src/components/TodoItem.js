@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 
-export default class TodoItem extends Component {
-  render() {
-    const { item, handleDelete, handleEdit } = this.props;
+const TodoItem=(props)=> {
+    const { item, handleDelete, handleEdit } = props;
     return (
       <div>
         <ul>
@@ -21,4 +20,5 @@ export default class TodoItem extends Component {
       </div>
     );
   }
-}
+
+  export default  TodoItem;

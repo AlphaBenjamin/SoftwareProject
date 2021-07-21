@@ -2,9 +2,8 @@ import React, { Component } from "react";
 
 import TodoItem from "./TodoItem";
 
-export default class TodoList extends Component {
-  render() {
-    const { items, clearList, handleDelete, handleEdit } = this.props;
+const TodoList=(props)=> {
+    const { items, clearList, handleDelete, handleEdit } = props;
     return (
       <div>
         <ul className="list-group my-5">
@@ -31,5 +30,5 @@ export default class TodoList extends Component {
         </ul>
       </div>
     );
-  }
 }
+export default  TodoList;
